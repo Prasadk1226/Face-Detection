@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Project Hub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #1e1e1e;
+            color: white;
+            margin: 0;
+            padding: 50px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .project {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 200px;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+        .project:hover {
+            background: #555;
+        }
+    </style>
+    <!-- Load the face-api.js library -->
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@latest"></script>
+</head>
+<body>
+    <h1>JavaScript Project Hub</h1>
+    <div class="container">
+        <a href="shadow-art.html" class="project">Shadow Art Generator</a>
+        <a href="face.html" class="project">AI Face Detection</a>
+    </div>
+
+    <!-- Link to the JS script for the AI Face Detection -->
+    <script src="script.js"></script>
+</body>
+</html>
