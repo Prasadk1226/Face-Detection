@@ -1,0 +1,263 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.night-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+body.night-mode h1 {
+    color: #f5f5f5;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.search-container {
+    display: flex;
+    max-width: 500px;
+    width: 100%;
+}
+
+#searchInput {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    font-size: 16px;
+    background-color: white;
+    color: #333;
+}
+
+body.night-mode #searchInput {
+    background-color: #333;
+    color: #f5f5f5;
+    border-color: #555;
+}
+
+#searchButton {
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+#searchButton:hover {
+    background-color: #2980b9;
+}
+
+.toggle-container {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+body.night-mode button {
+    background-color: #444;
+}
+
+button:hover {
+    background-color: #1a252f;
+}
+
+body.night-mode button:hover {
+    background-color: #555;
+}
+
+#starmap-container {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #000;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    z-index: 100;
+}
+
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.info-panel {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    transition: transform 0.3s, opacity 0.3s;
+    transform: translateX(0);
+    opacity: 1;
+}
+
+body.night-mode .info-panel {
+    background-color: rgba(30, 30, 30, 0.9);
+    color: #f5f5f5;
+}
+
+.info-panel.hidden {
+    transform: translateX(120%);
+    opacity: 0;
+}
+
+.info-panel h3 {
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+body.night-mode .info-panel h3 {
+    color: #f5f5f5;
+}
+
+#closeInfo {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px 8px;
+    background-color: transparent;
+    color: #777;
+    border: none;
+    font-size: 16px;
+}
+
+body.night-mode #closeInfo {
+    color: #aaa;
+}
+
+#closeInfo:hover {
+    color: #333;
+}
+
+body.night-mode #closeInfo:hover {
+    color: #fff;
+}
+
+.coordinates-display, .zoom-display {
+    position: absolute;
+    bottom: 20px;
+    padding: 8px 12px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.coordinates-display {
+    left: 20px;
+}
+
+.zoom-display {
+    right: 20px;
+}
+
+.tooltip {
+    position: absolute;
+    padding: 8px 12px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 4px;
+    pointer-events: none;
+    font-size: 14px;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.2s;
+    max-width: 200px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .search-container {
+        width: 100%;
+    }
+    
+    .info-panel {
+        width: calc(100% - 40px);
+        top: auto;
+        bottom: 20px;
+    }
+}

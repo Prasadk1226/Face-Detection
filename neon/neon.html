@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Glow Effect Generator PRO</title>
+    <link rel="stylesheet" href="neon.css">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Press+Start+2P&family=Rubik+Glitch&family=Monoton&family=Teko:wght@300&family=Bungee&family=Audiowide&family=Iceberg&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Neon Glow Effect Generator PRO ✨</h1>
+        <div class="controls-grid">
+            <!-- Updated Background Control - First Instance -->
+            <div class="control-group">
+                <label>Background Style:</label>
+                <div class="bg-buttons">
+                    <button class="bg-btn active" data-bg="dark" title="Cosmic Night">🌌</button>
+                    <button class="bg-btn" data-bg="darker" title="Void Black">⚫</button>
+                    <button class="bg-btn" data-bg="gradient" title="Neon Gradient">🌈</button>
+                    <button class="bg-btn" data-bg="grid" title="Cyber Grid">🔲</button>
+                    <button class="bg-btn" data-bg="stars" title="Starry Sky">✨</button>
+                    <button class="bg-btn" data-bg="custom" title="Custom Color">
+                        <input type="color" id="bg-color" value="#0a0a12">
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Text Controls -->
+            <div class="control-group">
+                <label for="text-input">Your Text:</label>
+                <input type="text" id="text-input" value="NEON" placeholder="Enter your text">
+            </div>
+            
+            <!-- Font Controls -->
+            <div class="control-group">
+                <label for="font-select">Font Style:</label>
+                <select id="font-select">
+                    <option value="'Permanent Marker', cursive">Permanent Marker</option>
+                    <option value="'Press Start 2P', cursive">Press Start 2P</option>
+                    <option value="'Rubik Glitch', cursive">Rubik Glitch</option>
+                    <option value="'Monoton', cursive">Monoton</option>
+                    <option value="'Teko', sans-serif">Teko Light</option>
+                    <option value="'Bungee', cursive">Bungee</option>
+                    <option value="'Audiowide', cursive">Audiowide</option>
+                    <option value="'Iceberg', cursive">Iceberg</option>
+                </select>
+            </div>
+            
+            <!-- Size Controls -->
+            <div class="control-group">
+                <label for="size-slider">Text Size: <span id="size-value">60px</span></label>
+                <input type="range" id="size-slider" min="10" max="150" value="60">
+            </div>
+            
+            <!-- Color Controls -->
+            <div class="control-group">
+                <label for="color-picker">Neon Color:</label>
+                <input type="color" id="color-picker" value="#ff4dff">
+                <label for="opacity-slider">Opacity: <span id="opacity-value">100%</span></label>
+                <input type="range" id="opacity-slider" min="10" max="100" value="100">
+            </div>
+            
+            <!-- Glow Style -->
+            <div class="control-group">
+                <label for="glow-style">Glow Style:</label>
+                <select id="glow-style">
+                    <option value="classic">Classic Glow</option>
+                    <option value="double">Double Glow</option>
+                    <option value="outer">Outer Glow</option>
+                    <option value="retro">Retro Glow</option>
+                </select>
+            </div>
+            
+            <!-- Glow Controls -->
+            <div class="control-group">
+                <label for="glow-slider">Glow Intensity: <span id="glow-value">10</span></label>
+                <input type="range" id="glow-slider" min="0" max="30" value="10">
+                
+                <label for="blur-slider">Glow Blur: <span id="blur-value">15px</span></label>
+                <input type="range" id="blur-slider" min="0" max="50" value="15">
+            </div>
+            
+            <!-- Animation -->
+            <div class="control-group">
+                <label for="animation-select">Animation:</label>
+                <select id="animation-select">
+                    <option value="none">None</option>
+                    <option value="pulse">Pulse</option>
+                    <option value="flicker">Flicker</option>
+                    <option value="glitch">Glitch</option>
+                </select>
+                <label for="animation-speed">Speed: <span id="speed-value">1</span></label>
+                <input type="range" id="animation-speed" min="0.5" max="3" step="0.1" value="1">
+            </div>
+            
+            <!-- Updated Background Control - Second Instance -->
+            <div class="control-group">
+                <label for="bg-select">Background Style:</label>
+                <select id="bg-select">
+                    <option value="dark">Cosmic Night</option>
+                    <option value="darker">Void Black</option>
+                    <option value="gradient">Neon Gradient</option>
+                    <option value="grid">Cyber Grid</option>
+                    <option value="stars">Starry Sky</option>
+                    <option value="custom">Custom Color</option>
+                </select>
+                <input type="color" id="bg-color" value="#0a0a12" style="display: none;">
+            </div>
+        </div>
+        
+        <!-- Preview Area -->
+        <div class="preview-container" id="preview-container">
+            <div id="neon-preview" class="neon-text">NEON</div>
+        </div>
+        
+        <!-- Output Options -->
+        <div class="output-options">
+            <button id="copy-css">📋 Copy CSS Code</button>
+            <button id="download-png">🖼️ Download PNG</button>
+            <button id="download-svg">📁 Download SVG</button>
+        </div>
+        
+        <!-- CSS Output -->
+        <div class="css-output">
+            <h3>CSS Code:</h3>
+            <textarea id="css-code" readonly></textarea>
+        </div>
+    </div>
+
+    <script src="neon.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarMap Explorer</title>
+    <link rel="stylesheet" href="starmap.css">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>StarMap Explorer</h1>
+            <div class="controls">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search for stars, planets, constellations...">
+                    <button id="searchButton">Search</button>
+                </div>
+                <div class="toggle-container">
+                    <button id="nightModeToggle">Night Mode</button>
+                    <button id="locationButton">Use My Location</button>
+                </div>
+            </div>
+        </header>
+        
+        <div id="loading">
+            <div class="loader"></div>
+            <p>Loading star data...</p>
+        </div>
+
+        <div id="starmap-container">
+            <div id="infoPanel" class="info-panel">
+                <h3 id="celestialName">Select an object</h3>
+                <p id="celestialInfo">Click on any celestial object to see details</p>
+                <button id="closeInfo">×</button>
+            </div>
+            <div id="coordinates" class="coordinates-display">
+                RA: <span id="raValue">0</span>° | Dec: <span id="decValue">0</span>°
+            </div>
+            <div id="zoomLevel" class="zoom-display">
+                Zoom: <span id="zoomValue">1</span>x
+            </div>
+        </div>
+
+        <div class="tooltip" id="tooltip"></div>
+    </div>
+
+    <script src="starmap.js"></script>
+</body>
+</html>
