@@ -180,9 +180,12 @@ input[type="color"]:hover {
         animation: neonIntro 1.6s ease-out forwards;
 }
 
-.preview-container.gradient-bg {
+/* .preview-container.gradient-bg {
     background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-}
+} */
+     .preview-container.gradient-bg {
+        background: linear-gradient(135deg, YOUR_START_COLOR 0%, YOUR_END_COLOR 100%) !important;
+    }
 
 .neon-text {
     text-align: center;
@@ -374,4 +377,8 @@ button:hover::after {
             0 0 20px currentColor,
             0 0 40px currentColor;
     }
+}
+
+.preview-container.gradient-bg {
+    background: linear-gradient(135deg, #ff0000 0%, #ffff00 100%) !important;
 }

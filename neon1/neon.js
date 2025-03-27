@@ -123,6 +123,65 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCssCode(settings);
     }
 
+    // function applyNeonEffect(settings) {
+    //     const { neonPreview, previewContainer } = elements;
+    //     const colorWithOpacity = `${settings.color}${Math.round(settings.opacity * 2.55).toString(16).padStart(2, '0')}`;
+        
+    //     // Apply basic styles
+    //     neonPreview.textContent = settings.text;
+    //     neonPreview.style.fontFamily = settings.font;
+    //     neonPreview.style.fontSize = settings.size;
+    //     neonPreview.style.color = settings.color;
+    //     neonPreview.style.opacity = `${settings.opacity}%`;
+
+    //     // Apply glow effect based on selected style
+    //     let textShadow;
+    //     switch(settings.glowStyle) {
+    //         case 'double':
+    //             textShadow = `
+    //                 0 0 ${settings.blurAmount} ${colorWithOpacity},
+    //                 0 0 ${parseInt(settings.blurAmount) * 2}px ${colorWithOpacity},
+    //                 0 0 ${settings.glowIntensity}px ${settings.color},
+    //                 0 0 ${parseInt(settings.glowIntensity) * 2}px ${settings.color}80
+    //             `;
+    //             break;
+    //         case 'outer':
+    //             textShadow = `
+    //                 0 0 ${settings.glowIntensity}px ${settings.color}00,
+    //                 0 0 ${settings.glowIntensity * 2}px ${settings.color}40,
+    //                 0 0 ${settings.glowIntensity * 3}px ${settings.color}80
+    //             `;
+    //             break;
+    //         case 'retro':
+    //             textShadow = `
+    //                 0 0 ${settings.blurAmount} ${settings.color},
+    //                 0 0 ${settings.blurAmount} ${settings.color},
+    //                 0 0 ${settings.blurAmount} ${settings.color},
+    //                 0 0 ${settings.glowIntensity}px ${settings.color}80,
+    //                 0 0 ${settings.glowIntensity * 1.5}px ${settings.color}40
+    //             `;
+    //             break;
+    //         default: // classic
+    //             textShadow = `
+    //                 0 0 ${settings.glowIntensity}px ${colorWithOpacity},
+    //                 0 0 ${settings.blurAmount} ${colorWithOpacity},
+    //                 0 0 ${parseInt(settings.blurAmount) * 1.5}px ${colorWithOpacity}
+    //             `;
+    //     }
+    //     neonPreview.style.textShadow = textShadow;
+
+    //     // Apply background
+    //     previewContainer.className = 'preview-container';
+    //     if (settings.background === 'gradient') {
+    //         previewContainer.style.background = 'linear-gradient(135deg, #ff00ff 0%, #00bfff 100%)';
+    //     } else if (settings.background === 'custom') {
+    //         previewContainer.style.backgroundColor = settings.bgColor;
+    //     } else if (settings.background === 'darker') {
+    //         previewContainer.style.backgroundColor = 'var(--darker-bg)';
+    //     } else {
+    //         previewContainer.style.backgroundColor = 'var(--bg-color)';
+    //     }
+    // }
     function applyNeonEffect(settings) {
         const { neonPreview, previewContainer } = elements;
         const colorWithOpacity = `${settings.color}${Math.round(settings.opacity * 2.55).toString(16).padStart(2, '0')}`;
@@ -133,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
         neonPreview.style.fontSize = settings.size;
         neonPreview.style.color = settings.color;
         neonPreview.style.opacity = `${settings.opacity}%`;
-
+    
         // Apply glow effect based on selected style
         let textShadow;
         switch(settings.glowStyle) {
@@ -169,11 +228,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
         }
         neonPreview.style.textShadow = textShadow;
-
-        // Apply background
+    
+        // Apply background - RESET STYLE FIRST
         previewContainer.className = 'preview-container';
+        previewContainer.style.background = '';
+        previewContainer.style.backgroundColor = '';
+    
         if (settings.background === 'gradient') {
-            previewContainer.style.background = 'linear-gradient(135deg, #ff00ff 0%, #00bfff 100%)';
+            previewContainer.classList.add('gradient-bg');
         } else if (settings.background === 'custom') {
             previewContainer.style.backgroundColor = settings.bgColor;
         } else if (settings.background === 'darker') {
@@ -241,20 +303,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function downloadAsPng() {
-        // Create a canvas with higher resolution
+        // Create canvas with higher resolution
         const canvas = document.createElement('canvas');
-        const scale = 4; // Scale factor for higher resolution
+        const scale = 20; // Increased scale for better quality
         canvas.width = elements.previewContainer.offsetWidth * scale;
         canvas.height = elements.previewContainer.offsetHeight * scale;
-        const context = canvas.getContext('2d');
+        const context = canvas.getContext('2d', { willReadFrequently: true });
         
-        // Draw background
+        // Enable advanced anti-aliasing
+        context.imageSmoothingQuality = 'high';
+        context.textDrawingMode = 'glyph';
+    
+        // Draw background with crisp edges
         if (elements.bgSelect.value === 'custom') {
             context.fillStyle = elements.bgColor.value;
         } else if (elements.bgSelect.value === 'gradient') {
-            const gradient = context.createLinearGradient(0, 0, canvas.width, canvas.height);
-            gradient.addColorStop(0, '#ff00ff');
-            gradient.addColorStop(1, '#00bfff');
+            const gradient = context.createLinearGradient(
+                -canvas.width * 0.2, -canvas.height * 0.2,
+                canvas.width * 1.2, canvas.height * 1.2
+            );
+            gradient.addColorStop(0, '#ff0000');
+            gradient.addColorStop(1, '#00ffff');
             context.fillStyle = gradient;
         } else if (elements.bgSelect.value === 'darker') {
             context.fillStyle = '#0a0a0a';
@@ -262,42 +331,55 @@ document.addEventListener('DOMContentLoaded', function() {
             context.fillStyle = '#1a1a1a';
         }
         context.fillRect(0, 0, canvas.width, canvas.height);
-        
-        // Apply text styles
-        context.font = `${parseInt(elements.sizeSlider.value) * scale}px ${elements.fontSelect.value}`;
-        context.fillStyle = elements.colorPicker.value;
+    
+        // Set up text styles with improved rendering
+        const fontSize = parseInt(elements.sizeSlider.value) * scale;
+        context.font = `${fontSize}px ${elements.fontSelect.value}`;
         context.textAlign = 'center';
         context.textBaseline = 'middle';
         
-        // Apply glow effect (multiple layers for better quality)
+        // Enhanced glow effect with better performance
         const glowColor = elements.colorPicker.value;
         const blurAmount = parseInt(elements.blurSlider.value) * scale;
         const glowIntensity = parseInt(elements.glowSlider.value) * scale;
         
-        // Draw glow layers
-        for (let i = 0; i < 8; i++) {
+        // Draw glow with optimized layers
+        for (let i = 0; i < 4; i++) {
             context.shadowColor = glowColor;
-            context.shadowBlur = blurAmount + (i * 5);
+            context.shadowBlur = blurAmount + (i * 10);
+            context.fillStyle = i === 3 ? elements.colorPicker.value : 'transparent';
             context.fillText(
                 elements.textInput.value || 'NEON',
                 canvas.width / 2,
                 canvas.height / 2
             );
         }
-        
-        // Draw main text
+    
+        // Draw crisp main text
         context.shadowColor = 'transparent';
-        context.fillText(
-            elements.textInput.value || 'NEON',
-            canvas.width / 2,
-            canvas.height / 2
-        );
+        context.shadowBlur = 0;
+        context.fillStyle = elements.colorPicker.value;
         
-        // Create download link
+        // Draw text multiple times for better opacity
+        for (let i = 0; i < 3; i++) {
+            context.fillText(
+                elements.textInput.value || 'NEON',
+                canvas.width / 2,
+                canvas.height / 2
+            );
+        }
+    
+        // Create download with maximum quality
         const link = document.createElement('a');
-        link.download = 'neon-text.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
+        link.download = 'neon-text-hq.png';
+        
+        // Use toBlob for better quality control
+        canvas.toBlob((blob) => {
+            const url = URL.createObjectURL(blob);
+            link.href = url;
+            link.click();
+            setTimeout(() => URL.revokeObjectURL(url), 100);
+        }, 'image/png', 1.0); // Maximum quality
     }
 
     function downloadAsSvg() {
