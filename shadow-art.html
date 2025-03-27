@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow Art Generator</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        #controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            background-color: #1e3c72;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #2a5298;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <button id="undoBtn">Undo</button>
+        <button id="deleteBtn">Delete</button>
+    </div>
+    <canvas id="canvas"></canvas>
+
+    <script src="shadow-art.js"></script>
+
+</body>
+</html>
